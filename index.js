@@ -17,7 +17,9 @@ for (let i = 0; i < 10; i++) {
  * @param {Array} array
  */
 function displayArray(array) {
-    console.log(array);
+    for (let i = 0; i <= array.length - 1; i++) {
+        console.log(array[i]);
+    }
 }
 
 displayArray(arr1);
@@ -59,7 +61,7 @@ console.log(`Array sum: ${sumArray(arr1)}`);
 /**
  *
  * @param {Array} array
- * @returns {number}
+ * @returns {number} Maximum element of the array
  */
 function findMax(array) {
     let max = null;
@@ -96,6 +98,11 @@ console.log(`Array with added element 45 at index 3: ${arr1}`);
 
 // 6. Функция удаления элемента из массива по указанному индексу.
 
+/**
+ *
+ * @param {Array} array
+ * @param {Number} place Index of the element to be removed from array.
+ */
 function removeElement(array, place) {
     for (let i = 0; i < array.length - 1; i++) {
         if (i >= place) {
@@ -123,39 +130,50 @@ for (let i = 0; i < 5; i++) {
 
 console.log(`Second array : ${arr2}`);
 
+/**
+ *
+ * @param array1
+ * @param array2
+ * @returns {[]} Array which comprises all the elements from the array1 and the array2 without repetitions.
+ */
 function concatArrays(array1, array2) {
     const array = [];
+    saveUniqueElementsToArray(array1, array, array);
+    saveUniqueElementsToArray(array2, array, array);
+    return array;
+}
+
+/**
+ * Checks for each element in array 1 whether there is a duplicate element in array2. If there is no duplicate in array2, the element from array1 is saved in array3.
+ * @param {Array} array1
+ * @param {Array} array2
+ * @param {Array} array3 Stores the elements from array1 that have no duplicates in array2.
+ */
+function saveUniqueElementsToArray(array1, array2, array3) {
     for (let i = 0; i < array1.length; i++) {
         let flag = true;
-        for (let j = 0; j < array.length; j++) {
-            if (array[j] === array1[i]) {
+        for (let j = 0; j < array2.length; j++) {
+            if ( array1[i] === array2[j] ) {
                 flag = false;
                 break;
             }
         }
         if (flag) {
-            array.push(array1[i]);
+            array3.push(array1[i]);
         }
     }
-    for (let i = 0; i < array2.length; i++) {
-        let flag = true;
-        for (let j = 0; j < array.length; j++) {
-            if (array[j] === array2[i]) {
-                flag = false;
-                break;
-            }
-        }
-        if (flag) {
-            array.push(array2[i]);
-        }
-    }
-    return array;
 }
 
 console.log(`Concatenated arr1 and arr2: ${concatArrays(arr1, arr2)}`);
 
 /*  2. Функция принимает 2 массива и возвращает новый массив, в котором собраны общие элементы (то есть элементы, которые встречаются и в первом и во втором массивах) без повторений.*/
 
+/**
+ *
+ * @param {Array} array1
+ * @param {Array} array2
+ * @returns {[]} Array that comprises mutual elements od array1 and array2 without repetitions.
+ */
 function findMutualElements(array1, array2) {
     const array = [];
     for (let i = 0; i < array1.length; i++) {
@@ -186,20 +204,15 @@ console.log(`Mutual elements of arr1 and arr2: ${findMutualElements(arr1, arr2)}
 
 /*3. Функция принимает 2 массива и возвращает новый массив, в котором собраны все элементы из первого массива, которых нет во втором массиве.*/
 
+/**
+ *
+ * @param {Array} array1
+ * @param {Array} array2
+ * @returns {[]} Array that consists of the elements that are comprised in the first array but not included in the second array.
+ */
 function findUniqueElements(array1, array2) {
     const array = [];
-    for (let i = 0; i < array1.length; i++) {
-        let flag = true;
-        for (let j = 0; j < array2.length; j++) {
-            if (array1[i]===array2[j]) {
-                flag = false;
-                break;
-            }
-        }
-        if (flag) {
-            array.push(array1[i]);
-        }
-    }
+    saveUniqueElementsToArray(array1, array2, array);
     return array;
 }
 
